@@ -1,4 +1,5 @@
 var path = require('path');
+var copy = require('copy-webpack-plugin');
 
 module.exports = {
     // context is your source directory
@@ -17,6 +18,13 @@ module.exports = {
         // name of your bundle (bundle.js is convention)
         filename: 'bundle.js'
     },
+
+    plugins: [
+        new copy([{
+            from: './index.html',
+            to: './'
+        }])
+    ],
 
     // specify the directory that acts as your root
     devServer: {
@@ -44,6 +52,10 @@ module.exports = {
             test: /\.scss$/,
             exclude: /node_modules/,
             loader: 'style-loader!css-loader!autoprefixer-loader!sass-loader'
+        }, {
+            test: /\.html$/,
+            exclude: /(node_modules|bower_components)/,
+            loader: 'raw-loader'
         }, {
             test: /\.(png|jpg|svg|ttf|eot|woff|woff2)$/,
             exclude: /node_modules/,
