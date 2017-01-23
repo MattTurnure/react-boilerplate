@@ -1,9 +1,10 @@
 var path = require('path');
+var webpack = require('webpack');
 var copy = require('copy-webpack-plugin');
 
 module.exports = {
     // context is your source directory
-    context: path.resolve('src'),
+    context: path.resolve(__dirname, 'src'),
 
     // entry refers to your main js file
     entry: [
@@ -14,30 +15,34 @@ module.exports = {
         // where the bundle file get sent
         path: path.resolve('dist/'),
         // where you want to reference the path
-        publicPath: '/assets/',
+        publicPath: '/',
         // name of your bundle (bundle.js is convention)
         filename: 'bundle.js'
     },
 
     plugins: [
         new copy([{
-            from: './index.html',
+            from: './dev/index.html',
             to: './'
-        }])
+        }]),
+        new webpack.DefinePlugin({
+            'process.env': {
+                NODE_ENV: JSON.stringify('development')
+            }
+        })
     ],
 
     // specify the directory that acts as your root
     devServer: {
-        contentBase: 'dist'
+        contentBase: './dist',
+        inline: true,
+        historyApiFallback: true,
+        port: 4444
     },
 
     // preloaders and loaders
     module: {
-        loaders: [{
-            test: /\.js$/,
-            exclude: /node_modules/,
-            loader: 'babel-loader'
-        }, { 
+        loaders: [{ 
             test: /\.jsx?$/, // Match both .js and .jsx files
             exclude: /node_modules/, 
             loader: 'babel', 
@@ -54,7 +59,7 @@ module.exports = {
             loader: 'style-loader!css-loader!autoprefixer-loader!sass-loader'
         }, {
             test: /\.html$/,
-            exclude: /(node_modules|bower_components)/,
+            exclude: /(node_modules)/,
             loader: 'raw-loader'
         }, {
             test: /\.(png|jpg|svg|ttf|eot|woff|woff2)$/,
