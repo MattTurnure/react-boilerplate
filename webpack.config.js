@@ -36,6 +36,18 @@ module.exports = {
             query: {
                 presets:['react']
             }
+        }, {
+            test: /\.css$/,
+            exclude: /node_modules/,
+            loader: 'style-loader!css-loader!autoprefixer-loader'
+        }, {
+            test: /\.scss$/,
+            exclude: /node_modules/,
+            loader: 'style-loader!css-loader!autoprefixer-loader!sass-loader'
+        }, {
+            test: /\.(png|jpg|svg|ttf|eot|woff|woff2)$/,
+            exclude: /node_modules/,
+            loader: 'url-loader?limit=10'
         }]
     },
 
