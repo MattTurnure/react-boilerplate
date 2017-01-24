@@ -2,6 +2,11 @@ var path = require('path');
 var webpack = require('webpack');
 var copy = require('copy-webpack-plugin');
 
+// optimize
+var extractplugin = require('extract-text-webpack-plugin');
+var extractstyle = new extractplugin('assets/[name].css');
+var WebpackStrip = require('strip-loader');
+
 module.exports = {
     // context is your source directory
     context: path.resolve(__dirname, 'src'),
@@ -22,14 +27,18 @@ module.exports = {
 
     plugins: [
         new copy([{
-            from: './dev/index.html',
+            from: './index.html',
             to: './'
         }]),
+
+        // create css file
+        extractstyle,
         new webpack.DefinePlugin({
             'process.env': {
-                NODE_ENV: JSON.stringify('development')
+                NODE_ENV: JSON.stringify('production')
             }
-        })
+        }),
+        new webpack.optimize.UglifyJsPlugin()
     ],
 
     // specify the directory that acts as your root
@@ -50,13 +59,13 @@ module.exports = {
                 presets:['react']
             }
         }, {
-            test: /\.css$/,
-            exclude: /node_modules/,
-            loader: 'style-loader!css-loader!autoprefixer-loader'
-        }, {
             test: /\.scss$/,
             exclude: /node_modules/,
-            loader: 'style-loader!css-loader!autoprefixer-loader!sass-loader'
+            loader: extractstyle.extract([
+                'css',
+                'autoprefixer',
+                'sass'
+            ])
         }, {
             test: /\.html$/,
             exclude: /(node_modules)/,
@@ -65,6 +74,10 @@ module.exports = {
             test: /\.(png|jpg|svg|ttf|eot|woff|woff2)$/,
             exclude: /node_modules/,
             loader: 'url-loader?limit=10'
+        }, {
+            test: [/\.js$/, /\.es6$/],
+            exclude: /node_modules/,
+            loader: WebpackStrip.loader('console.*')
         }]
     },
 
