@@ -1,10 +1,14 @@
 import React, { Component } from 'react';
+import HeaderMain from './header-main';
 import HelloWorld from './hello-world';
 
 class Main extends Component {
     render() {
         return (
-            <HelloWorld />
+            <div>
+                <HeaderMain />
+                <HelloWorld />
+            </div>
         );
     }
 }

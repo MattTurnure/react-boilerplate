@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 
 class HelloWorld extends Component {
     render() {
+        let env = typeof process === 'undefined' ? 'World' : process.env.NODE_ENV;
+
         return (
-            <h1>Hello {process.env.NODE_ENV}!</h1>
+            <h1>Hello { env }!</h1>
         );
     }
 }
