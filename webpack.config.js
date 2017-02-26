@@ -70,6 +70,6 @@ module.exports = {
 
     // this makes it so you don't have to type '.js' in import statements.
     resolve: {
-        extensions: ['', '.js']
+        extensions: ['', '.js', '.jsx']
     }
 };
