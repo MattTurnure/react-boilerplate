@@ -45,18 +45,18 @@ module.exports = {
         loaders: [{ 
             test: /\.jsx?$/, // Match both .js and .jsx files
             exclude: /node_modules/, 
-            loader: 'babel', 
+            loader: 'babel-loader', 
             query: {
                 presets:['react']
             }
         }, {
             test: /\.css$/,
             exclude: /node_modules/,
-            loader: 'style-loader!css-loader!autoprefixer-loader'
+            loader: 'style-loader!css-loader!postcss-loader'
         }, {
             test: /\.scss$/,
             exclude: /node_modules/,
-            loader: 'style-loader!css-loader!autoprefixer-loader!sass-loader'
+            loader: 'style-loader!css-loader!postcss-loader!sass-loader'
         }, {
             test: /\.html$/,
             exclude: /(node_modules)/,
@@ -70,6 +70,6 @@ module.exports = {
 
     // this makes it so you don't have to type '.js' in import statements.
     resolve: {
-        extensions: ['', '.js', '.jsx']
+        extensions: ['.js', '.jsx']
     }
 };
