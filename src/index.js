@@ -2,9 +2,13 @@ require('./main.scss');
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Main from './components/main';
+import { BrowserRouter, Route } from 'react-router-dom';
+
+import HelloWorld from './components/HelloWorld/HelloWorld';
 
 ReactDOM.render(
-    <Main />,
+    <BrowserRouter>
+        <Route path="/" component={HelloWorld} />
+    </BrowserRouter>,
     document.getElementById('root')
 );
