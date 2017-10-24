@@ -24,6 +24,9 @@ module.exports = {
         new copy([{
             from: './dev/index.html',
             to: './'
+        }, {
+            from: '../node_modules/@salesforce-ux/design-system/assets',
+            to: './assets'
         }]),
         new webpack.DefinePlugin({
             'process.env': {

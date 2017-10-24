@@ -4,7 +4,7 @@ class HelloWorld extends Component {
     render() {
         return (
             <div>
-                hi
+                <h1>Hello World</h1>
             </div>
         );
     }
